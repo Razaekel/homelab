@@ -217,3 +217,23 @@ resource "truenas_dataset" "users" {
 
   quota_bytes = 1 * local.TiB_in_bytes
 }
+
+resource "truenas_dataset" "media" {
+  name = "media"
+  pool = local.system_pool
+}
+
+resource "truenas_share_smb" "smb_share_media" {
+  path = truenas_dataset.media.mount_point
+
+  name = "media"
+
+  #acl           = false
+  auxsmbconf    = "case sensitive=yes\npreserve case=yes\nshort preserve case=yes"
+  browsable     = false
+  durablehandle = false
+  enabled       = true
+  purpose       = "NO_PRESET"
+  shadowcopy    = true
+  streams       = false
+}
