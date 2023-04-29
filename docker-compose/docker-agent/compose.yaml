@@ -1,0 +1,14 @@
+services:
+  portainer-agent:
+    image: portainer/agent:latest
+    container_name: portainer-agent
+    ports:
+      - "9001:9001"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /var/lib/docker/volumes
+        target: /var/lib/docker/volumes
+    restart: always
